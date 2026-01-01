@@ -15,26 +15,25 @@ spec:
         app: summer-k8s-app
     spec:
       containers:
-      - name: webserver-simple
-        image: docker.io/kostiscodefresh/gitops-canary-app:v1.0
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 8080
+        - name: webserver-simple
+          image: docker.io/kostiscodefresh/gitops-canary-app:v1.0
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
   strategy:
     canary:
       canaryService: rollout-canary-preview
       stableService: rollout-canary-active
       trafficRouting:
         traefik:
-          weightedTraefikServiceName: traefik-service 
+          weightedTraefikServiceName: traefik-service
       steps:
-      - setWeight: 30
-      - pause: {duration: 2m}
-      - setWeight: 60
-      - pause: {duration: 2m}
-      - setWeight: 100
-      - pause: {duration: 2m}    
+        - setWeight: 30
+        - pause: { duration: 1m }
+        - setWeight: 60
+        - pause: { duration: 1m }
+        - setWeight: 100
+        - pause: { duration: 1m }
       analysis:
         templates:
-        - templateName: simple-200-return
-       
+          - templateName: simple-200-return
